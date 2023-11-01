@@ -1,6 +1,9 @@
  const express = require("express");
  const cors = require("cors");
  require('dotenv').config();
+ const bodyParser = require('body-parser');
+ const formidableMiddleware = require('express-formidable');
+
 
  const detailsRouter = require("./routes/DetailsRoute");
  const emailRouter = require("./routes/sendemailRoute");
@@ -10,6 +13,9 @@
  app.use(cors());
  app.use(express.json());
  app.use(express.urlencoded({ extended:true}));
+ app.use(bodyParser.json());
+ app.use(bodyParser.urlencoded());
+ app.use(formidableMiddleware());
 
 const PORT =7000;
 
