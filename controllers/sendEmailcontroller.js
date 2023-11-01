@@ -14,19 +14,11 @@ const sendEmail = (req, res)=>{
     console.log("sending....")
     try{
         const  { name, email,phoneNumber,nationalId,productId, productName}= req.body;
-        const files = req.files
-
+        const { files, idPhoto } = req.files;
+        const pdfAttachments = files.filter((file) => file.mimetype === 'application/pdf');
+        const imageAttachments = [idPhoto].concat(files.filter((file) => file.mimetype === 'image/jpeg'));
         console.log(req.body)
         console.log(files)
-        // let attachments = [];
-
-        // // Add files to attachments array
-        // if (files && Array.isArray(files)) {
-        //     attachments = files.map(file => ({
-        //         filename: file.originalname,
-        //         content: file.buffer
-        //     }));
-        // }
         
         let mailOptions = {
             from        : process.env.EMAIL_ADDRESS,
@@ -42,7 +34,7 @@ const sendEmail = (req, res)=>{
                                 <p>Phone Number: ${phoneNumber}</p>
                             </div>
                             `,
-            attachments : files
+                            attachments: [...pdfAttachments, ...imageAttachments].concat(idPhoto),
         }
         transporter.sendMail(mailOptions, (err, data ) => {
             if(err){
