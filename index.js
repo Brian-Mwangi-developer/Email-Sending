@@ -3,7 +3,7 @@
  require('dotenv').config();
 
  const detailsRouter = require("./routes/DetailsRoute");
- const emailRouter = require("./routes/emailRoute");
+ const emailRouter = require("./routes/sendemailRoute");
 
 
  const app = express();
@@ -18,7 +18,7 @@ app.get("/",async(req,res)=>{
 })
 
 app.use("/api/", detailsRouter);
-app.use("/api/",emailRouter)
+app.use("/api",emailRouter)
 
 app.listen(PORT,()=>{
     console.log(`Server listening on port ${PORT}`);
