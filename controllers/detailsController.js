@@ -1,8 +1,12 @@
 const asyncHandler = require("express-async-handler");
 const {sendSMS} = require("../helper/smshelper")
+const formData = require("express-form-data");
+const os = require("os");
 
 const getDetails =asyncHandler(async(req,res)=>{
-    const {email,phoneNumber,productId,productName,nationalId} =req.body
+    console.log(req.fields)
+    console.log(req.files)
+    const {email,phoneNumber,productId,productName,nationalId} = req.fields
     if (!phoneNumber) {
         return res.status(400).json({
             status: "error",
